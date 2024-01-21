@@ -3,8 +3,8 @@ import trafficSimulator as ts
 sim = ts.Simulation()
 
 # Add road segments
-sim.create_segment((-100, 3), (100, 2))
-sim.create_segment((100, -3), (-100, -2))
+sim.create_segment(0, (-100, 3), (100, 2))
+sim.create_segment(1, (100, -3), (-100, -2))
 
 # Add vehicle generator
 sim.create_vehicle_generator(

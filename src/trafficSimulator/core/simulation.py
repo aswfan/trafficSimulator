@@ -8,7 +8,7 @@ from .vehicle import Vehicle
 
 class Simulation:
     def __init__(self):
-        self.segments = []
+        self.segments = {}
         self.vehicles = {}
         self.vehicle_generator = []
 
@@ -22,8 +22,8 @@ class Simulation:
         if len(veh.path) > 0:
             self.segments[veh.path[0]].add_vehicle(veh)
 
-    def add_segment(self, seg):
-        self.segments.append(seg)
+    def add_segment(self, id, seg):
+        self.segments[id] = seg
 
     def add_vehicle_generator(self, gen):
         self.vehicle_generator.append(gen)
@@ -33,17 +33,17 @@ class Simulation:
         veh = Vehicle(kwargs)
         self.add_vehicle(veh)
 
-    def create_segment(self, start, end):
+    def create_segment(self, id, start, end):
         seg = StraightLine(start, end)
-        self.add_segment(seg)
+        self.add_segment(id, seg)
 
-    def create_quadratic_bezier_curve(self, start, control, end):
+    def create_quadratic_bezier_curve(self, id, start, control, end):
         cur = QuadraticCurve(start, control, end)
-        self.add_segment(cur)
+        self.add_segment(id, cur)
 
-    def create_cubic_bezier_curve(self, start, control_1, control_2, end):
+    def create_cubic_bezier_curve(self, id, start, control_1, control_2, end):
         cur = CubicCurve(start, control_1, control_2, end)
-        self.add_segment(cur)
+        self.add_segment(id, cur)
 
     def create_vehicle_generator(self, **kwargs):
         gen = VehicleGenerator(kwargs)
@@ -56,14 +56,14 @@ class Simulation:
 
     def update(self):
         # Update vehicles
-        for segment in self.segments:
+        for id, segment in self.segments.items():
             if len(segment.vehicles) != 0:
                 self.vehicles[segment.vehicles[0]].update(None, self.dt)
             for i in range(1, len(segment.vehicles)):
                 self.vehicles[segment.vehicles[i]].update(self.vehicles[segment.vehicles[i-1]], self.dt)
 
         # Check roads for out of bounds vehicle
-        for segment in self.segments:
+        for id, segment in self.segments.items():
             # If road has no vehicles, continue
             if len(segment.vehicles) == 0: continue
             # If not
