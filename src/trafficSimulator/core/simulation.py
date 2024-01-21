@@ -1,6 +1,7 @@
 from .vehicle_generator import VehicleGenerator
 from .geometry.quadratic_curve import QuadraticCurve
 from .geometry.cubic_curve import CubicCurve
+from .geometry.straight_line import StraightLine
 from .geometry.segment import Segment
 from .vehicle import Vehicle
 
@@ -32,8 +33,8 @@ class Simulation:
         veh = Vehicle(kwargs)
         self.add_vehicle(veh)
 
-    def create_segment(self, *args):
-        seg = Segment(args)
+    def create_segment(self, start, end):
+        seg = StraightLine(start, end)
         self.add_segment(seg)
 
     def create_quadratic_bezier_curve(self, start, control, end):
