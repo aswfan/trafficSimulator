@@ -265,8 +265,12 @@ class Window:
 
     def draw_segments(self):
         for id, segment in self.simulation.segments.items():
+            # TODO: Use color scheme, istead of hardcoding.
             dpg.draw_polyline(segment.points, color=(180, 180, 220), thickness=3.5*self.zoom, parent="Canvas")
-            # dpg.draw_arrow(segment.points[-1], segment.points[-2], thickness=0, size=2, color=(0, 0, 0, 50), parent="Canvas")
+            dpg.draw_arrow(segment.points[-1], segment.points[-2], thickness=0, size=2, color=(0, 0, 0, 50), parent="Canvas")
+            # TODO: Update the text size.
+            dpg.draw_text(segment.points[-1], segment.name, size=10, color=(0, 0, 0), parent="Canvas")
+            
 
     def draw_vehicles(self):
         for id, segment in self.simulation.segments.items():

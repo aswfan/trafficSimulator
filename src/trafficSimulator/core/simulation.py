@@ -33,16 +33,16 @@ class Simulation:
         veh = Vehicle(kwargs)
         self.add_vehicle(veh)
 
-    def create_segment(self, id, start, end):
-        seg = StraightLine(start, end)
+    def create_segment(self, id, start, end, **kwargs):
+        seg = StraightLine(id=id, start=start, end=end, **kwargs)
         self.add_segment(id, seg)
 
-    def create_quadratic_bezier_curve(self, id, start, control, end):
-        cur = QuadraticCurve(start, control, end)
+    def create_quadratic_bezier_curve(self, id, start, control, end, **kwargs):
+        cur = QuadraticCurve(id=id, start=start, control=control, end=end, **kwargs)
         self.add_segment(id, cur)
 
-    def create_cubic_bezier_curve(self, id, start, control_1, control_2, end):
-        cur = CubicCurve(start, control_1, control_2, end)
+    def create_cubic_bezier_curve(self, id, start, control_1, control_2, end, **kwargs):
+        cur = CubicCurve(id=id, start=start, control_1=control_1, control_2=control_2, end=end, **kwargs)
         self.add_segment(id, cur)
 
     def create_vehicle_generator(self, **kwargs):

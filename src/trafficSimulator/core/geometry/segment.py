@@ -7,7 +7,9 @@ from math import sqrt
 from scipy.integrate import quad
 
 class Segment(ABC):
-    def __init__(self, points):
+    def __init__(self, id, points, name=None):
+        self.id = id
+        self.name = name or f"segment {id}"
         self.points = points
         self.vehicles = deque()
 

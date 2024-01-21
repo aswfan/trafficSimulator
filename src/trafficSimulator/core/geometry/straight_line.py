@@ -4,7 +4,7 @@ PAS = 0.01
 CURVE_RESOLUTION = 50
 
 class StraightLine(Segment):
-    def __init__(self, start, end):
+    def __init__(self, id, start, end, **kwargs):
         # Store characteristic points
         self.start = start
         self.end = end
@@ -17,11 +17,11 @@ class StraightLine(Segment):
             y = (1 - t) * self.start[1] + t * self.end[1]
             path.append((x, y))
 
-        super().__init__(path)
+        super().__init__(id=id, points=path, **kwargs)
 
         # Arc-length parametrization
         normalized_path = self.find_normalized_path(CURVE_RESOLUTION)
-        super().__init__(normalized_path)
+        super().__init__(id=id, points=normalized_path, **kwargs)
 
     def compute_x(self, t):
         return (1 - t) * self.start[0] + t * self.end[0]
